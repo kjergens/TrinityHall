@@ -6,47 +6,74 @@
 <title>Sight Word Matching Game</title>
 <style>
 
-  body {
-    background-color: white;
-    padding: 50px 100px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: larger;
-    color: darkslategray
-  }
+    body {
+        background-color: white;
+        padding: 50px 60px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        color: darkslategray;
+        text-align: center;
+    }
 
     .bingo-square {
-      background-color: teal;
-      color: white;
-      margin: 10px;
-      padding: 30px;
-      width: 400px;
+        background-color: teal;
+        color: white;
+        margin: 5px;
+        padding: 30px 25px;
     }
 
     .start-btn {
-      background-color: black;
-      color: white;
-      background: url(http://www.clipartbest.com/cliparts/acq/xRx/acqxRxMgi.png);
-      background-repeat: 3px 5px no-repeat;
-      margin: 10px;
-      padding: 30px;
-      width: fit-content;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url('http://www.clipartbest.com/cliparts/acq/xRx/acqxRxMgi.png');
+        background-size: 50%;
+        margin: 10px;
+        padding: 40px;
+        width: 400px;
+    }
+
+    .result-image {
+        background-repeat: no-repeat;
+        background-size: 200px;
+        padding: 150px 100px;
+    }
+
+    .go-ahead {
+        background-image: url('http://www.clipartbest.com/cliparts/acq/xRx/acqxRxMgi.png');
+    }
+
+    .try-again {
+        background-image: url('https://pngimg.com/uploads/traffic_light/traffic_light_PNG56250.png');
+        
     }
 
     .bingo-board { 
-      display: grid;
-      grid-template-columns: repeat(4, 100px);
-      grid-template-rows: repeat(4, 100px);
+        display: grid;
+        grid-template-columns: repeat(4, 100px);  
+        grid-template-rows: repeat(4, 100px);
+    }
+
+    .board-area {
+        float: left;
+        width: 430px;
+    }
+
+    .result-area {
+        float: left;
     }
 
 </style>
 </head>
 <body>
 Listen for the sight word and click on correct block 
+
+
+
 <script>
 //----------------------------------
 // Array of sight words
 //----------------------------------
-const sightWords = ['The', 'And', 'You', 'For', 'Was', 'Are', 'With', 'His', 'Her', 'They', 'This', 'Have', 'from', 'one', 'had', 'by'];
+const sightWords = ['the', 'and', 'you', 'for', 'was', 'are', 'with', 'his', 'her', 'they', 'this', 'have', 'from', 'one', 'had', 'by'];
 
 //----------------------------------
 // Function to get a random sight word
@@ -54,17 +81,35 @@ const sightWords = ['The', 'And', 'You', 'For', 'Was', 'Are', 'With', 'His', 'He
 function getRandomWord() {
   return sightWords[Math.floor(Math.random() * sightWords.length)];
 }
-correctWord = "Nothing" // need to initialize it to something
+
+correctWord = "" // need to initialize it to something
+
+//----------------------------------
+// Create a left (board) and right (result) panel of the page
+//----------------------------------
+const boardArea = document.createElement('div');
+boardArea.classList.add('board-area')
+
+//----------------------------------
+// Create a space for the correct/incorrect picture
+//----------------------------------
+const resultArea = document.createElement('div');
+resultArea.classList.add('result-area');
+const resultImage = document.createElement('div');
+resultImage.classList.add('result-image');
+resultArea.append(resultImage);
+const resultText = document.createElement('div');
+resultArea.append(resultText);
 
 //----------------------------------
 // Make the start button
 //----------------------------------
- const startBtn = document.createElement('div');
-  startBtn.className = 'start-btn';
-  startBtn.textContent = "START";
+const startBtn = document.createElement('div');
+startBtn.className = 'start-btn';
+startBtn.textContent = "START";
 
-  // Make it clickable
-  startBtn.addEventListener('click', () => {
+// Make it clickable
+startBtn.addEventListener('click', () => {
     // If the page is speaking, interupt it.
     if (speechSynthesis.speaking) {
       speechSynthesis.cancel();
@@ -76,52 +121,66 @@ correctWord = "Nothing" // need to initialize it to something
     // Say the word
     const sUtterance = new SpeechSynthesisUtterance(correctWord);
     speechSynthesis.speak(sUtterance);
-  });
+});
 
+// Add the button to the board area
 document.body.appendChild(startBtn);
+
+
 
 //----------------------------------
 // Create a 4x4 Bingo Board
 //----------------------------------
 const board = document.createElement('div');
-board.className = 'bingo-board';
+board.classList.add('bingo-board'); 
 
 // Add the squares
 for (let i = 0; i < 16; i++) {
-  const square = document.createElement('div');
-  square.className = 'bingo-square';
-  square.textContent = sightWords[i];
+    const square = document.createElement('div');
+    square.className = 'bingo-square';
+    square.textContent = sightWords[i];
    
-  // Make each square clickable
-  square.addEventListener('click', () => {
+    // Make each square clickable
+    square.addEventListener('click', () => {
 
-    // If the game is speaking, interupt it.
-    if (speechSynthesis.speaking) {
-      speechSynthesis.cancel();
-    }
+        // If the game is speaking, interupt it.
+        if (speechSynthesis.speaking) {
+            speechSynthesis.cancel();
+        }
     
-    // Check if the clicked word matches the start word
-    result = "Wrong";
-    if (square.textContent == correctWord) { 
-      result = "Correct"; 
-    }
-    
-    // Construct the response
-    response = result + ". " + square.textContent;
+        // Check if the clicked word matches the start word
+        result = ""
+        if (correctWord != "") {
+            if (square.textContent == correctWord){ 
+                result = "Correct"; 
+                resultImage.classList.remove('try-again');
+                resultImage.classList.add('go-ahead');
+                resultText.textContent = "Yay!";
+            } else {
+                result = "Wrong"
+                resultImage.classList.remove('go-ahead');
+                resultImage.classList.add('try-again');
+                resultText.textContent = "Try again"
+            }
+        }        
 
-    // Speak
-    const utterance = new SpeechSynthesisUtterance(response);
-    speechSynthesis.speak(utterance);
-  });
+        // Speak
+        response = result + " " + square.textContent;
+        const utterance = new SpeechSynthesisUtterance(response);
+        speechSynthesis.speak(utterance);
+    });
 
-  // Add the square to the board
-  board.appendChild(square);
+    // Add the square to the board
+    board.appendChild(square);
 }
+// Add the board to the boardArea (left half of page)
+boardArea.appendChild(board);
 
-// Add the completed board to the page
-document.body.appendChild(board);
+// Add the boardArea to the page
+document.body.appendChild(boardArea);
 
-
+// Add the resulting image to the page
+document.body.appendChild(resultArea)
 
 </script>
 </body>
