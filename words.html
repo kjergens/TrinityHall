@@ -8,18 +8,22 @@
     .bingo-square {
         color: whitesmoke;
         font-size: larger;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         background-color: green;
         margin: 10px;
         border: 10px solid lightgoldenrodyellow;
+        padding: 10px auto;
         
     }
 
     .start-btn {
         color: whitesmoke;
         font-size: larger;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         background-color: black;
         margin: 10px;
-        padding: auto;
+        padding: 10px auto;
+        width: fit-content;
         
     }
 
@@ -29,11 +33,7 @@
     grid-template-rows: repeat(4, 100px);
         margin: 50px;
     }
-    .word {
-        display: inline-block;
-        background-color: lightblue;
-        cursor: pointer;
-    }
+
 </style>
 </head>
 <body>
@@ -61,7 +61,7 @@ correctWord = "Nothing" // need to initialize it to something
 
   // Make it clickable
   startBtn.addEventListener('click', () => {
-    // If the page is speaking, interupt
+    // If the page is speaking, interupt it.
     if (speechSynthesis.speaking) {
       speechSynthesis.cancel();
     }
