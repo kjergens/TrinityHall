@@ -9,8 +9,17 @@
         color: whitesmoke;
         font-size: larger;
         background-color: green;
-        margin: 13px;
-        padding: 30px;
+        margin: 10px;
+        border: 10px solid lightgoldenrodyellow;
+        
+    }
+
+    .start-btn {
+        color: whitesmoke;
+        font-size: larger;
+        background-color: black;
+        margin: 10px;
+        padding: auto;
         
     }
 
@@ -18,13 +27,10 @@
     display: grid;
     grid-template-columns: repeat(4, 100px);
     grid-template-rows: repeat(4, 100px);
-        border: 10px solid lightgoldenrodyellow;
         margin: 50px;
     }
     .word {
         display: inline-block;
-        padding: 10px;
-        margin: 10px;
         background-color: lightblue;
         cursor: pointer;
     }
@@ -48,16 +54,22 @@ correctWord = "Nothing" // need to initialize it to something
 
 //----------------------------------
 // Make the start button
-// Now speak a random word - for now just says "and"
 //----------------------------------
  const startBtn = document.createElement('div');
-  startBtn.className = 'bingo-square';
+  startBtn.className = 'start-btn';
   startBtn.textContent = "START";
+
+  // Make it clickable
   startBtn.addEventListener('click', () => {
+    // If the page is speaking, interupt
     if (speechSynthesis.speaking) {
       speechSynthesis.cancel();
     }
+
+    // Pick a random word
     correctWord = getRandomWord()
+
+    // Say the word
     const sUtterance = new SpeechSynthesisUtterance(correctWord);
     speechSynthesis.speak(sUtterance);
   });
