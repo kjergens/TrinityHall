@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sight Word Matching Game</title>
+<style>
+    .bingo-square {
+        color: lightgreen;
+        background-color: green;
+        margin: 13px;
+        padding: 30px;
+        
+    }
+
+    .bingo-board { 
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: repeat(4, 100px);
+        border: 10px;
+        margin: 50px;
+    }
+    .word {
+        display: inline-block;
+        padding: 10px;
+        margin: 10px;
+        background-color: lightblue;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+Listen for the sight word and click on correct block 
+<script>
+  // Array of sight words
+const sightWords = ['The', 'And', 'You', 'For', 'Was', 'Are', 'With', 'His', 'Her', 'They', 'This', 'Have', 'from', 'one', 'had', 'by'];
+
+// Function to get a random sight word
+function getRandomWord() {
+  return sightWords[Math.floor(Math.random() * sightWords.length)];
+}
+correctWord = "Nothing" // need to initialize it to something
+    
+        // Make the start button
+    // Now speak a random word - for now just says "and"
+ const startBtn = document.createElement('div');
+  startBtn.className = 'bingo-square';
+  startBtn.textContent = "START";
+  startBtn.addEventListener('click', () => {
+    if (speechSynthesis.speaking) {
+      speechSynthesis.cancel();
+    }
+    correctWord = getRandomWord()
+    const sUtterance = new SpeechSynthesisUtterance(correctWord);
+    speechSynthesis.speak(sUtterance);
+  });
+
+document.body.appendChild(startBtn);
+
+// Create a 4x4 Bingo Board
+const board = document.createElement('div');
+board.className = 'bingo-board';
+
+// Make the word board
+for (let i = 0; i < 16; i++) {
+  const square = document.createElement('div');
+  square.className = 'bingo-square';
+  square.textContent = sightWords[i];
+   
+  square.addEventListener('click', () => {
+    if (speechSynthesis.speaking) {
+      speechSynthesis.cancel();
+    }
+       result = "Wrong";
+      if (square.textContent == correctWord) { result = "Correct"; }
+      response = result + ". " + square.textContent;
+    const utterance = new SpeechSynthesisUtterance(response);
+    speechSynthesis.speak(utterance);
+  });
+  board.appendChild(square);
+}
+
+document.body.appendChild(board);
+
+
+
+</script>
+</body>
+</html>
