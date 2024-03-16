@@ -25,11 +25,14 @@
     .start-btn {
         background-repeat: no-repeat;
         background-position: center;
-        background-image: url('http://www.clipartbest.com/cliparts/acq/xRx/acqxRxMgi.png');
-        background-size: 50%;
+        background-image: url('http://www.clipartbest.com/cliparts/eTM/77p/eTM77pRrc.jpg');
+        background-size: 30%;
         margin: 10px;
-        padding: 40px;
-        width: 400px;
+        padding: 70px 50px;
+        width: 330px;
+        color: white;
+        font-size: medium;
+        font-weight: bold;
     }
 
     .result-image {
@@ -39,12 +42,11 @@
     }
 
     .go-ahead {
-        background-image: url('http://www.clipartbest.com/cliparts/acq/xRx/acqxRxMgi.png');
+        background-image: url('http://www.clipartbest.com/cliparts/pi5/ek7/pi5ek7y9T.gif');
     }
 
     .try-again {
-        background-image: url('https://pngimg.com/uploads/traffic_light/traffic_light_PNG56250.png');
-        
+        background-image: url('http://akaritutoring.com/Images/oops.jpg');
     }
 
     .bingo-board { 
@@ -65,9 +67,6 @@
 </style>
 </head>
 <body>
-Listen for the sight word and click on correct block 
-
-
 
 <script>
 //----------------------------------
@@ -106,7 +105,6 @@ resultArea.append(resultText);
 //----------------------------------
 const startBtn = document.createElement('div');
 startBtn.className = 'start-btn';
-startBtn.textContent = "START";
 
 // Make it clickable
 startBtn.addEventListener('click', () => {
@@ -125,7 +123,6 @@ startBtn.addEventListener('click', () => {
 
 // Add the button to the board area
 document.body.appendChild(startBtn);
-
 
 
 //----------------------------------
@@ -183,5 +180,7 @@ document.body.appendChild(boardArea);
 document.body.appendChild(resultArea)
 
 </script>
+
+
 </body>
 </html>
