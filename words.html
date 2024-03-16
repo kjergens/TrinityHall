@@ -6,7 +6,8 @@
 <title>Sight Word Matching Game</title>
 <style>
     .bingo-square {
-        color: lightgreen;
+        color: whitesmoke;
+        font-size: larger;
         background-color: green;
         margin: 13px;
         padding: 30px;
@@ -17,7 +18,7 @@
     display: grid;
     grid-template-columns: repeat(4, 100px);
     grid-template-rows: repeat(4, 100px);
-        border: 10px;
+        border: 10px solid lightgoldenrodyellow;
         margin: 50px;
     }
     .word {
@@ -32,17 +33,23 @@
 <body>
 Listen for the sight word and click on correct block 
 <script>
-  // Array of sight words
+//----------------------------------
+// Array of sight words
+//----------------------------------
 const sightWords = ['The', 'And', 'You', 'For', 'Was', 'Are', 'With', 'His', 'Her', 'They', 'This', 'Have', 'from', 'one', 'had', 'by'];
 
+//----------------------------------
 // Function to get a random sight word
+//----------------------------------
 function getRandomWord() {
   return sightWords[Math.floor(Math.random() * sightWords.length)];
 }
 correctWord = "Nothing" // need to initialize it to something
-    
-        // Make the start button
-    // Now speak a random word - for now just says "and"
+
+//----------------------------------
+// Make the start button
+// Now speak a random word - for now just says "and"
+//----------------------------------
  const startBtn = document.createElement('div');
   startBtn.className = 'bingo-square';
   startBtn.textContent = "START";
@@ -57,29 +64,45 @@ correctWord = "Nothing" // need to initialize it to something
 
 document.body.appendChild(startBtn);
 
+//----------------------------------
 // Create a 4x4 Bingo Board
+//----------------------------------
 const board = document.createElement('div');
 board.className = 'bingo-board';
 
-// Make the word board
+// Add the squares
 for (let i = 0; i < 16; i++) {
   const square = document.createElement('div');
   square.className = 'bingo-square';
   square.textContent = sightWords[i];
    
+  // Make each square clickable
   square.addEventListener('click', () => {
+
+    // If the game is speaking, interupt it.
     if (speechSynthesis.speaking) {
       speechSynthesis.cancel();
     }
-       result = "Wrong";
-      if (square.textContent == correctWord) { result = "Correct"; }
-      response = result + ". " + square.textContent;
+    
+    // Check if the clicked word matches the start word
+    result = "Wrong";
+    if (square.textContent == correctWord) { 
+      result = "Correct"; 
+    }
+    
+    // Construct the response
+    response = result + ". " + square.textContent;
+
+    // Speak
     const utterance = new SpeechSynthesisUtterance(response);
     speechSynthesis.speak(utterance);
   });
+
+  // Add the square to the board
   board.appendChild(square);
 }
 
+// Add the completed board to the page
 document.body.appendChild(board);
 
 
