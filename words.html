@@ -41,12 +41,12 @@
         padding: 150px 100px;
     }
 
-    .go-ahead {
+    .correct-answer {
         background-image: url('http://www.clipartbest.com/cliparts/pi5/ek7/pi5ek7y9T.gif');
     }
 
     .try-again {
-        background-image: url('http://akaritutoring.com/Images/oops.jpg');
+        background-image: url('https://clipart-library.com/images/dT45bke8c.png');
     }
 
     .bingo-board { 
@@ -57,7 +57,7 @@
 
     .board-area {
         float: left;
-        width: 430px;
+        width: 500px;
     }
 
     .result-area {
@@ -84,23 +84,6 @@ function getRandomWord() {
 correctWord = "" // need to initialize it to something
 
 //----------------------------------
-// Create a left (board) and right (result) panel of the page
-//----------------------------------
-const boardArea = document.createElement('div');
-boardArea.classList.add('board-area')
-
-//----------------------------------
-// Create a space for the correct/incorrect picture
-//----------------------------------
-const resultArea = document.createElement('div');
-resultArea.classList.add('result-area');
-const resultImage = document.createElement('div');
-resultImage.classList.add('result-image');
-resultArea.append(resultImage);
-const resultText = document.createElement('div');
-resultArea.append(resultText);
-
-//----------------------------------
 // Make the start button
 //----------------------------------
 const startBtn = document.createElement('div');
@@ -123,6 +106,30 @@ startBtn.addEventListener('click', () => {
 
 // Add the button to the board area
 document.body.appendChild(startBtn);
+
+//----------------------------------
+// Create a board area (on the left) and result panel (on the right) 
+//----------------------------------
+const boardArea = document.createElement('div');
+const resultArea = document.createElement('div');
+
+boardArea.classList.add('board-area')
+resultArea.classList.add('result-area');
+
+// Add the board area to the page
+document.body.appendChild(boardArea);
+
+// Add the result panel to the page
+document.body.appendChild(resultArea)
+
+//----------------------------------
+// In the result area, create a space for the correct/incorrect picture
+//----------------------------------
+const resultImage = document.createElement('div');
+resultImage.classList.add('result-image');
+resultArea.append(resultImage);
+const resultText = document.createElement('div');
+resultArea.append(resultText);
 
 
 //----------------------------------
@@ -151,11 +158,11 @@ for (let i = 0; i < 16; i++) {
             if (square.textContent == correctWord){ 
                 result = "Correct"; 
                 resultImage.classList.remove('try-again');
-                resultImage.classList.add('go-ahead');
+                resultImage.classList.add('correct-answer');
                 resultText.textContent = "Yay!";
             } else {
                 result = "Wrong"
-                resultImage.classList.remove('go-ahead');
+                resultImage.classList.remove('correct-answer');
                 resultImage.classList.add('try-again');
                 resultText.textContent = "Try again"
             }
@@ -173,11 +180,7 @@ for (let i = 0; i < 16; i++) {
 // Add the board to the boardArea (left half of page)
 boardArea.appendChild(board);
 
-// Add the boardArea to the page
-document.body.appendChild(boardArea);
 
-// Add the resulting image to the page
-document.body.appendChild(resultArea)
 
 </script>
 
