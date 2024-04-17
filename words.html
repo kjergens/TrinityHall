@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,6 +63,7 @@
 
     .result-area {
         float: left;
+	margin-left: 300px;
     }
 
 </style>
@@ -132,6 +134,7 @@ const resultText = document.createElement('div');
 resultArea.append(resultText);
 
 
+
 //----------------------------------
 // Create a 4x4 Bingo Board
 //----------------------------------
@@ -159,7 +162,22 @@ for (let i = 0; i < 16; i++) {
                 result = "Correct"; 
                 resultImage.classList.remove('try-again');
                 resultImage.classList.add('correct-answer');
-                resultText.textContent = "Yay!";
+
+		// Make a textbox for them to type the word
+                resultText.textContent = "Enter the word here:";
+    		var input = document.createElement("input");
+    
+    		// Set input type
+    		input.type = "text";
+
+		// Need to wire an event handler for when they type word.
+    
+    		// Append input to the body
+    		resultArea.appendChild(input);
+
+		// Hide the board
+		boardArea.remove(board);
+		
             } else {
                 result = "Wrong"
                 resultImage.classList.remove('correct-answer');
@@ -172,6 +190,7 @@ for (let i = 0; i < 16; i++) {
         response = result + " " + square.textContent;
         const utterance = new SpeechSynthesisUtterance(response);
         speechSynthesis.speak(utterance);
+
     });
 
     // Add the square to the board
